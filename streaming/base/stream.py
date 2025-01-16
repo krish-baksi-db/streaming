@@ -1,3 +1,4 @@
+# Databricks notebook source
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
 
@@ -447,6 +448,9 @@ class Stream:
                     # `index.json` since only one process downloads the `index.json` file while
                     # other processes wait for it to get downloaded. Hence, It avoids loading the
                     # in-progress downloading `index.json`.
+                    
+                    print("Trying to download the file.")
+
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
                 else:
