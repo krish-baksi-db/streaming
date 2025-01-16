@@ -311,6 +311,8 @@ class Stream:
             remote = os.path.join(self.remote, self.split, from_basename)
         local = os.path.join(self.local, self.split, to_basename or from_basename)
 
+        local_ret = local[:]
+
         print("Trying to Download")
         print("Remote: ", remote)
         print("Local: ", local)
@@ -319,7 +321,7 @@ class Stream:
             lambda: self._downloader.download(remote, local, self.download_timeout))()
         print("Seems like file is downloaded.")
         print(os.listdir(self.local))
-        return local
+        return local_ret
 
     def _decompress_shard_part(self, zip_info: FileInfo, zip_filename: str, raw_filename: str,
                                compression: Optional[str]) -> None:
@@ -458,6 +460,9 @@ class Stream:
                     # print("Contents ", os.listdir(self.local))
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
+                    print("Index Downloading Complete")
+
+                    
                 else:
                     if not os.path.exists(filename):
                         raise RuntimeError(f'No `remote` provided, but local file {filename} ' +
