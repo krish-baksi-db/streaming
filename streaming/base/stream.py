@@ -311,6 +311,9 @@ class Stream:
             remote = os.path.join(self.remote, self.split, from_basename)
         local = os.path.join(self.local, self.split, to_basename or from_basename)
 
+        print("Trying to Download")
+        print("Remote: ", remote)
+        print("Local: ", local)
         # Attempt to download, possibly repeating on failure.
         retry(clean_up_fn=self._downloader.clean_up, num_attempts=self.download_retry)(
             lambda: self._downloader.download(remote, local, self.download_timeout))()
@@ -449,9 +452,9 @@ class Stream:
                     # other processes wait for it to get downloaded. Hence, It avoids loading the
                     # in-progress downloading `index.json`.
                     
-                    print("Trying to download the file.")
-                    print("Local Directory", self.local)
-                    print("Contents ", os.listdir(self.local))
+                    # print("Trying to download the file.")
+                    # print("Local Directory", self.local)
+                    # print("Contents ", os.listdir(self.local))
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
                 else:
