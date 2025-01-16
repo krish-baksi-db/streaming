@@ -1,3 +1,4 @@
+# Databricks notebook source
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
 
@@ -115,6 +116,7 @@ class CloudDownloader(abc.ABC):
             raise ValueError(
                 'In the absence of local dataset, path to remote dataset must be provided')
 
+        print("Trying to download in Downloader")
         if sys.platform == 'win32':
             remote = pathlib.PureWindowsPath(remote).as_posix()
             local = pathlib.PureWindowsPath(local).as_posix()
@@ -123,6 +125,8 @@ class CloudDownloader(abc.ABC):
         os.makedirs(local_dir, exist_ok=True)
 
         self._validate_remote_path(remote)
+        print("Validated remote path")
+
         self._download_file_impl(remote, local, timeout)
 
     @staticmethod
