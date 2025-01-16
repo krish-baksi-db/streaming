@@ -1,5 +1,8 @@
+# Databricks notebook source
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
+
+# Adding some random things here
 
 """Helper methods to get the distributed attributes."""
 
