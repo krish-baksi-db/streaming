@@ -450,7 +450,7 @@ class Stream:
                     # in-progress downloading `index.json`.
                     
                     print("Trying to download the file.")
-
+                    print("Local Directory {}, Contents {}".format(self.local, os.listdir(self.local)))
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
                 else:
