@@ -70,6 +70,8 @@ class CloudDownloader(abc.ABC):
         if prefix not in DOWNLOADER_MAPPINGS:
             raise ValueError(f'Unsupported remote path: {remote_dir}')
 
+
+        print("Prefix", prefix)
         return DOWNLOADER_MAPPINGS[prefix]()
 
     @classmethod
@@ -152,6 +154,7 @@ class CloudDownloader(abc.ABC):
             local (str): Local path.
             timeout (float): How long to wait for file to download before raising an exception.
         """
+        print("Coming here as well")
         raise NotImplementedError
 
     def _validate_remote_path(self, remote: str) -> None:
