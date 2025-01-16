@@ -71,7 +71,7 @@ class CloudDownloader(abc.ABC):
             raise ValueError(f'Unsupported remote path: {remote_dir}')
 
 
-        print("Prefix", prefix)
+        # print("Prefix", prefix)
         return DOWNLOADER_MAPPINGS[prefix]()
 
     @classmethod
@@ -118,7 +118,7 @@ class CloudDownloader(abc.ABC):
             raise ValueError(
                 'In the absence of local dataset, path to remote dataset must be provided')
 
-        print("Trying to download in Downloader")
+        # print("Trying to download in Downloader")
         if sys.platform == 'win32':
             remote = pathlib.PureWindowsPath(remote).as_posix()
             local = pathlib.PureWindowsPath(local).as_posix()
@@ -127,7 +127,7 @@ class CloudDownloader(abc.ABC):
         os.makedirs(local_dir, exist_ok=True)
 
         self._validate_remote_path(remote)
-        print("Validated remote path")
+        # print("Validated remote path")
 
         self._download_file_impl(remote, local, timeout)
 

@@ -313,9 +313,9 @@ class Stream:
 
         local_ret = local[:]
 
-        print("Trying to Download")
-        print("Remote: ", remote)
-        print("Local: ", local)
+        # print("Trying to Download")
+        # print("Remote: ", remote)
+        # print("Local: ", local)
         # Attempt to download, possibly repeating on failure.
         retry(clean_up_fn=self._downloader.clean_up, num_attempts=self.download_retry)(
             lambda: self._downloader.download(remote, local, self.download_timeout))()
@@ -460,7 +460,7 @@ class Stream:
                     # print("Contents ", os.listdir(self.local))
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
-                    print("Index Downloading Complete")
+                    # print("Index Downloading Complete")
 
                     
                 else:
