@@ -318,7 +318,7 @@ class Stream:
         retry(clean_up_fn=self._downloader.clean_up, num_attempts=self.download_retry)(
             lambda: self._downloader.download(remote, local, self.download_timeout))()
         print("Seems like file is downloaded.")
-        print(os.listdir(local))
+        print(os.listdir(self.local))
         return local
 
     def _decompress_shard_part(self, zip_info: FileInfo, zip_filename: str, raw_filename: str,
