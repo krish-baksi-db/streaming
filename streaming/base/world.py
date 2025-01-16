@@ -1,3 +1,4 @@
+# Databricks notebook source
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
 
@@ -81,10 +82,14 @@ class World:
             Tuple[int, int]: Worker ID out of how many workers.
         """
         info = get_worker_info()
+
+        print(info)
         if info:
             ret = info.id, info.num_workers
+            
         else:
             ret = 0, 1
+
         return ret
 
     @classmethod
