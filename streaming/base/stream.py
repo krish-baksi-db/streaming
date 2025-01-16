@@ -451,7 +451,7 @@ class Stream:
                     
                     print("Trying to download the file.")
                     print("Local Directory", self.local)
-                    print("Contents ", os.listdir(self.local)))
+                    print("Contents ", os.listdir(self.local))
                     tmp_filename = self._download_file(basename, basename + '.tmp')
                     os.rename(tmp_filename, filename)
                 else:
