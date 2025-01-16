@@ -448,7 +448,7 @@ class Stream:
         basename = get_index_basename()
         filename = os.path.join(self.local, self.split, basename)  # pyright: ignore
         if not os.path.exists(filename):
-            if world.is_leader:
+            if world.is_local_leader:
                 if self.remote:
                     # Downloads the `index.json` as `index.json.tmp` fully and then rename it to
                     # `index.json` since only one process downloads the `index.json` file while
