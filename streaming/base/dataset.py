@@ -575,7 +575,7 @@ class StreamingDataset(Array, IterableDataset):
                                                _get_path(self._shm_prefix_int, SHARD_ACCESS_TIMES))
 
         # Initialize shared memory objects.
-        if self._unique_rank_world.rank in range(len(self._unique_rank_world.num_nodes)):
+        if self._unique_rank_world.rank in range(self._unique_rank_world.num_nodes):
             # Set initial epoch (before any resumption).
             self.next_epoch = 0
 
@@ -771,7 +771,7 @@ class StreamingDataset(Array, IterableDataset):
         self._shared_barrier(self._unique_worker_world.workers_per_node)
 
         # Set the new next epoch.
-        if self._unique_worker_world.rank in range(len(self._unique_worker_world.num_nodes)):
+        if self._unique_worker_world.rank in range(self._unique_worker_world.num_nodes):
             self.next_epoch = epoch + 1
 
         return epoch, sample_in_epoch
@@ -1029,7 +1029,7 @@ class StreamingDataset(Array, IterableDataset):
         p_world = self._parallel_worker_world
 
         # Do expensive work that may use a lot of cores/memory just once, in the local leader.
-        if u_world.rank in range(len(u_world.num_nodes)):
+        if u_world.rank in range(u_world.num_nodes):
             if self.replication is not None and self.replication > 1 and not u_world.worker_of_rank:
                 logger.warning(
                     f'The `replication` arg has been set to {self.replication} and ' +
