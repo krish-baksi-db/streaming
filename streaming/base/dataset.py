@@ -771,7 +771,7 @@ class StreamingDataset(Array, IterableDataset):
         self._shared_barrier(self._unique_worker_world.workers_per_node)
 
         # Set the new next epoch.
-        if self._unique_worker_world.rank in in range(len(self._unique_worker_world.num_nodes)):
+        if self._unique_worker_world.rank in range(len(self._unique_worker_world.num_nodes)):
             self.next_epoch = epoch + 1
 
         return epoch, sample_in_epoch
