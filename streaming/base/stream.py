@@ -2,6 +2,11 @@
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
 
+
+# Some changes made by Krishanu Das Baksi @ Databricks.
+# 2 Primary changes -- 
+# 1. changing the name of the files being downloaded.
+# 2. changing the world.is_local_leader check to world.rank in [:len(num_nodes)]
 """A dataset, or sub-dataset if mixing, from which we stream/cache samples."""
 
 import hashlib
@@ -311,7 +316,7 @@ class Stream:
             remote = os.path.join(self.remote, self.split, from_basename)
         local = os.path.join(self.local, self.split, to_basename or from_basename)
 
-        local_ret = local[:]
+        local_ret = local[:] # This is one change Krish made
 
         # print("Trying to Download")
         # print("Remote: ", remote)
@@ -319,8 +324,8 @@ class Stream:
         # Attempt to download, possibly repeating on failure.
         retry(clean_up_fn=self._downloader.clean_up, num_attempts=self.download_retry)(
             lambda: self._downloader.download(remote, local, self.download_timeout))()
-        print("Seems like file is downloaded.")
-        print(os.listdir(self.local))
+        # print("Seems like file is downloaded.")
+        # print(os.listdir(self.local))
         return local_ret
 
     def _decompress_shard_part(self, zip_info: FileInfo, zip_filename: str, raw_filename: str,
@@ -448,7 +453,7 @@ class Stream:
         basename = get_index_basename()
         filename = os.path.join(self.local, self.split, basename)  # pyright: ignore
         if not os.path.exists(filename):
-            if world.rank in [0, 1]:
+            if world.rank in range(len(world.num_nodes)):
                 if self.remote:
                     # Downloads the `index.json` as `index.json.tmp` fully and then rename it to
                     # `index.json` since only one process downloads the `index.json` file while
