@@ -1,3 +1,4 @@
+# Databricks notebook source
 # Copyright 2022-2024 MosaicML Streaming authors
 # SPDX-License-Identifier: Apache-2.0
 
@@ -219,7 +220,7 @@ def get_shm_prefix(streams_local: list[str],
         dist.barrier()
 
     # First, the local leader registers the first available shm prefix, recording its locals.
-    if world.is_local_leader:
+    if world.rank in [0, 1]:
         name = _get_path(prefix_int, LOCALS)
         data = _pack_locals(streams_local, prefix_int)
         shm = SharedMemory(name, True, len(data))
@@ -229,7 +230,7 @@ def get_shm_prefix(streams_local: list[str],
         dist.barrier()
 
     # Non-local leaders go next, searching for match.
-    if not world.is_local_leader:
+    if not world.rank in [0, 1]:
         name = _get_path(prefix_int, LOCALS)
         try:
             shm = SharedMemory(name, False)

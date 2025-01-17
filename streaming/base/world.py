@@ -82,14 +82,10 @@ class World:
             Tuple[int, int]: Worker ID out of how many workers.
         """
         info = get_worker_info()
-
-        # print(info)
         if info:
             ret = info.id, info.num_workers
-            
         else:
             ret = 0, 1
-
         return ret
 
     @classmethod
@@ -103,7 +99,7 @@ class World:
         ranks_per_node = dist.get_local_world_size()
         num_nodes = dist.get_world_size() // ranks_per_node
         worker_of_rank, workers_per_rank = cls._get_worker_info()
-        worker = rank // num_nodes 
+        worker = rank * workers_per_rank + worker_of_rank
         return cls(num_nodes, ranks_per_node, workers_per_rank, worker)
 
     def copy(self) -> Self:
