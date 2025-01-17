@@ -83,7 +83,7 @@ class World:
         """
         info = get_worker_info()
 
-        print(info)
+        # print(info)
         if info:
             ret = info.id, info.num_workers
             
